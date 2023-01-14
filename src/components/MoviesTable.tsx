@@ -1,20 +1,15 @@
-import { FC, useEffect, useMemo, useState, useCallback } from "react";
+import { FC, useMemo, useCallback } from "react";
 import MaterialReactTable, {
   MaterialReactTableProps,
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
 } from "material-react-table";
-import type {
-  ColumnFiltersState,
-  PaginationState,
-  //   SortingState,
-} from "@tanstack/react-table";
 import { ExportToCsv } from "export-to-csv";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Delete, Edit } from "@mui/icons-material";
-import { Movie, MovieApiResponse } from "../types";
+import { Movie } from "../types";
 import CreateNewMovieModal from "./CreateNewMovieModal";
 import DeleteItemModal from "./DeleteItemModal";
 import useMoviesTable from "../hooks/useMoviesTable";
@@ -141,8 +136,9 @@ const MoviesTable: FC = () => {
           <img
             alt="avatar"
             height={200}
+            width={135}
             src={row.original.Poster}
-            loading="lazy"
+            loading={row.index === 0 || row.index === 1 ? "eager" : "lazy"}
             style={{ borderRadius: "12px" }}
           />
         ),
@@ -181,7 +177,7 @@ const MoviesTable: FC = () => {
             muiTableHeadCellProps: {
               align: "center",
             },
-            size: 120,
+            // size: 80,
           },
         }}
         columns={columns}
